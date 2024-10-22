@@ -47,14 +47,18 @@ function html(data){
     let html ="";
     if(data.length > 0){
     for(let i =0; i < data.length; i++){
+        let timeStamp = Number(data[i].time+'000');
+        let date = new Date(timeStamp);
+        date = date.getFullYear();
         
 
         html += `<div class="row"><img src="${data[i].img}" />
                 <div class="info">
-                <div class="title">${data[i].title}</div>
+                <div class="title">${data[i].title} <span class="data">(${date} m.)</span></div>
                 <div class="author">${data[i].author}</div>
                 <div class="category">${data[i].type}</div>
-                <span class="price">${data[i].price} &euro;</span>
+                <button class="cart">
+                <span class="price">${data[i].price} &euro;</span> <i class="fa-solid fa-cart-plus"></i></button>
                 </div>
             </div>`;
     }
@@ -102,6 +106,10 @@ function booksFilter(arr, id){
 
     return filteredBooks;
 
+}
+
+function addToCart(id){
+    
 }
 
 callingApi();
