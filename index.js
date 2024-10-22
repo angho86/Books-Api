@@ -44,8 +44,12 @@ function fullObj(obj1, obj2){
 function html(data){
 
     const box = document.querySelector(".box");
+
+
     let html ="";
     if(data.length > 0){
+
+        
     for(let i =0; i < data.length; i++){
         let timeStamp = Number(data[i].time+'000');
         let date = new Date(timeStamp);
@@ -57,14 +61,18 @@ function html(data){
                 <div class="title">${data[i].title} <span class="data">(${date} m.)</span></div>
                 <div class="author">${data[i].author}</div>
                 <div class="category">${data[i].type}</div>
-                <button class="cart">
+                <button class="cart" onclick='addToCart(${JSON.stringify(data[i])})'>
                 <span class="price">${data[i].price} &euro;</span> <i class="fa-solid fa-cart-plus"></i></button>
                 </div>
             </div>`;
+                
+            
     }
 } else
 
-    {html = `<div class="warning">Knygu pagal sia kategorija neturime<br/> <img src="sorry.png" class="img"/></div>`;}
+    { 
+        html = '<div class="warning">Knygu pagal sia kategorija neturime<br/> <img src="sorry.png" class="img"/></div>';
+    }
 
     box.innerHTML = html;
 }
@@ -108,8 +116,26 @@ function booksFilter(arr, id){
 
 }
 
-function addToCart(id){
-    
+function addToCart(obj){
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    const inCart = document.getElementById("inCart");
+
+    let cartItem = Object.assign({}, obj);
+
+    if(cart === null) cart = [];
+
+    cart.push(cartItem);
+    console.log(cart);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    if(cart.length > 0){
+        inCart.innerText = cart.length;
+    }
+    else {
+        inCart.innerText = '';
+    }
+
 }
 
 callingApi();
