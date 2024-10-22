@@ -194,6 +194,12 @@ function turnOff(){
 
     cartWindow.style.display = "none";
 
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    cart = [];
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
 }
 
 callingApi();
