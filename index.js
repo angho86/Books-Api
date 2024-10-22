@@ -12,6 +12,9 @@ async function callingApi() {
  
     selectBook(categoriesData, allBooksArray);
 
+    const cartBtn = document.querySelector(".shopingCart");
+    cartBtn.addEventListener("click", viewCart);
+
 }
 
 function fullObj(obj1, obj2){
@@ -42,37 +45,38 @@ function fullObj(obj1, obj2){
 }
 
 function html(data){
-
+    
     const box = document.querySelector(".box");
-
-
+    
     let html ="";
     if(data.length > 0){
 
         
-    for(let i =0; i < data.length; i++){
-        let timeStamp = Number(data[i].time+'000');
-        let date = new Date(timeStamp);
-        date = date.getFullYear();
-        
-
-        html += `<div class="row"><img src="${data[i].img}" />
-                <div class="info">
-                <div class="title">${data[i].title} <span class="data">(${date} m.)</span></div>
-                <div class="author">${data[i].author}</div>
-                <div class="category">${data[i].type}</div>
-                <button class="cart" onclick='addToCart(${JSON.stringify(data[i])})'>
-                <span class="price">${data[i].price} &euro;</span> <i class="fa-solid fa-cart-plus"></i></button>
-                </div>
-            </div>`;
-                
+        for(let i =0; i < data.length; i++){
+            let timeStamp = Number(data[i].time+'000');
+            let date = new Date(timeStamp);
+            date = date.getFullYear();
             
-    }
+
+            html += `<div class="row"><img src="${data[i].img}" />
+                    <div class="info">
+                    <div class="title">${data[i].title} <span class="data">(${date} m.)</span></div>
+                    <div class="author">${data[i].author}</div>
+                    <div class="category">${data[i].type}</div>
+                    <button class="cart" onclick='addToCart(${JSON.stringify(data[i])})'>
+                    <span class="price">${data[i].price} &euro;</span> <i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>`;
+                    
+                
+        }
 } else
 
     { 
         html = '<div class="warning">Knygu pagal sia kategorija neturime<br/> <img src="sorry.png" class="img"/></div>';
     }
+
+    
 
     box.innerHTML = html;
 }
@@ -135,6 +139,60 @@ function addToCart(obj){
     else {
         inCart.innerText = '';
     }
+
+}
+
+
+function viewCart(){
+    const cartWindow = document.querySelector(".modalCart");
+
+    cartWindow.style.display = "flex";
+    
+    const cartList = document.getElementById("cartList");
+    const amount = document.getElementById("amount");
+
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    if(!cart) {
+        cartList.innerText = "Prekiu krepselyje neturite";
+        cart = [];
+    } else {
+
+    let payingSum = 0;
+    
+    for( let i=0; i < cart.length; i++){
+        payingSum += cart[i].price;
+    }
+
+    amount.innerHTML = `${payingSum} &euro;`;
+
+    let li = '';
+    for(let i=0; i < cart.length; i++){
+        let timeStamp = Number(cart[i].time+'000');
+        let date = new Date(timeStamp);
+        date = date.getFullYear();
+
+        li += `<li> 
+                <div class="modRow"><img src="${cart[i].img}" class="modImg" />
+                <div class="modInfo">
+                <div class="modTitle">${cart[i].title} <span class="modData">(${date} m.)</span></div>
+                <div class="modAuthor">${cart[i].author}</div>
+                <div class="modCategory">${cart[i].type}</div>
+                <span class="modPrice">${cart[i].price} &euro;</span> 
+                </div>
+                </div> 
+                </li>`;
+
+    }
+    cartList.innerHTML = li;
+}
+
+}
+
+function turnOff(){
+    const cartWindow = document.querySelector(".modalCart");
+
+    cartWindow.style.display = "none";
 
 }
 

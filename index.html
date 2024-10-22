@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modalCart.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knygu API</title>
 </head>
@@ -20,6 +21,21 @@
     </div>
 
     <button class="shopingCart"><i class="fa-solid fa-cart-shopping fa-2x"></i><span id="inCart"></span></button>
+
+
+
+    <div class="modalCart">
+
+        <ul id="cartList">
+
+        </ul>
+
+        <div id="amount"></div>
+        <button class="paying" onclick="turnOff()">BUY</button>
+
+
+
+    </div>
 
     <script src="/index.js"></script>
 </body>
